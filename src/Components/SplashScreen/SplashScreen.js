@@ -13,15 +13,13 @@ class FirstPage extends Component {
     return (
       <View style={styles.Main}>
         <Image
-          source={SelectIcon.currencyConvert}
+          source={SelectIcon.logo}
           style={{
-            width: widthPercentageToDP("40%"),
-            height: heightPercentageToDP("20%"),
-            tintColor: "white",
+            width: widthPercentageToDP("50%"),
+            height: heightPercentageToDP("30%"),
             resizeMode: "contain"
           }}
         />
-        <Text style={{ fontSize: 25, color: "white", fontWeight: "700" }}>Currency Converter</Text>
       </View>
     );
   }
@@ -34,6 +32,6 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(149, 165, 166, 1)"
+    backgroundColor: "#19b5fe"
   }
 });

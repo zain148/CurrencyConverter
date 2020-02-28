@@ -4,6 +4,7 @@ import SplashScreen from "../src/Components/SplashScreen/SplashScreen";
 import HomeScreen from "../src/Components/HomeScreen/HomeScreen";
 import FlatL from "../src/Components/HomeScreen/FlatList/FL";
 import FlatLTwo from "../src/Components/HomeScreen/FlatListTwo/FL";
+import Converter from "../src/Components/ConvertS/FlatList/FL";
 const Data = createStackNavigator(
   {
     ScreenFirt: {
@@ -26,6 +27,12 @@ const Data = createStackNavigator(
     },
     ScreenInputFlatListTwo: {
       screen: FlatLTwo,
+      navigationOptions: {
+        header: null
+      }
+    },
+    ScreenConvertS: {
+      screen: Converter,
       navigationOptions: {
         header: null
       }

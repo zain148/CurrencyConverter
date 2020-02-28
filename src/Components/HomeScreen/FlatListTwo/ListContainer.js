@@ -7,6 +7,7 @@ import {
 } from "react-native-responsive-screen";
 
 import SelectIcon from "../../../../assets/images.js";
+import { TouchableOpacity } from "react-native-gesture-handler";
 class ListContainer extends Component {
   state = {
     showIcon: false
@@ -14,35 +15,37 @@ class ListContainer extends Component {
 
   render() {
     return (
-      <View
-        style={{
-          width: wp("100%"),
-          height: hp("7%"),
-          backgroundColor: this.state.showIcon ? "gray" : "white"
-        }}
-        onTouchEnd={() => {
-          this.setState({ showIcon: true });
-          setTimeout(() => {
-            this.props.NAV.navigate("HomeScreen", { itemTwo: this.props.ITEM });
-          }, 600);
-        }}
-      >
-        <View
-          style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "stretch" }}
+      <View onTouchEnd={() => {}}>
+        <TouchableOpacity
+          style={{
+            width: wp("100%"),
+            height: hp("7%"),
+            backgroundColor: this.state.showIcon ? "#19b5fe" : "white"
+          }}
+          onPress={() => {
+            this.setState({ showIcon: true });
+            setTimeout(() => {
+              this.props.NAV.navigate("HomeScreen", { itemTwo: this.props.ITEM });
+            }, 600);
+          }}
         >
-          <Text style={{ fontSize: 20, marginLeft: 15 }}>{this.props.ITEM} </Text>
-          {this.state.showIcon ? (
-            <Image
-              source={SelectIcon.select}
-              style={{
-                width: wp("10%"),
-                height: hp("5%"),
-                tintColor: "white",
-                resizeMode: "contain"
-              }}
-            />
-          ) : null}
-        </View>
+          <View
+            style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "stretch" }}
+          >
+            <Text style={{ fontSize: 20, marginLeft: 15 }}>{this.props.ITEM} </Text>
+            {this.state.showIcon ? (
+              <Image
+                source={SelectIcon.select}
+                style={{
+                  width: wp("10%"),
+                  height: hp("5%"),
+                  tintColor: "white",
+                  resizeMode: "contain"
+                }}
+              />
+            ) : null}
+          </View>
+        </TouchableOpacity>
       </View>
     );
   }

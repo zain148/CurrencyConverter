@@ -53,13 +53,14 @@ class FL extends Component {
             height: 40,
             justifyContent: "center",
             alignItems: "center",
-            backgroundColor: "gray"
+            backgroundColor: "#19b5fe"
           }}
         >
           <Text
             style={{
               fontSize: 20,
-              textAlign: "center"
+              textAlign: "center",
+              color: "white"
             }}
           >
             Available Currencies

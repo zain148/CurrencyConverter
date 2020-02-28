@@ -1,11 +1,21 @@
 import React, { Component } from "react";
-import { View, Text, StyleSheet, TextInput, Image, ActivityIndicator, Alert } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  TextInput,
+  Image,
+  KeyboardAvoidingView,
+  Alert
+} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import ButtonImage from "../../../assets/images";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
 } from "react-native-responsive-screen";
+import { db } from "../firebase";
+
 class LoginScreen extends Component {
   state = {
     InputValue: "",
@@ -14,7 +24,8 @@ class LoginScreen extends Component {
     indicator: false,
     ConversionValue: 1,
     ConversionType: "",
-    Data: ""
+    Data: "",
+    Data2: ""
   };
 
   currencyConverter = async () => {
@@ -50,16 +61,86 @@ class LoginScreen extends Component {
     }
   };
 
+  /*
+  Storing = async () => {
+    const Op = {
+      Base_Value: this.state.Item_Base_Value,
+      Conversion_ValueOne: this.state.Item_Convertion_Value,
+      date: new Date().toUTCString(),
+      InputValue: this.state.InputValue,
+      Conversion_ValueTwo: this.state.ConversionValue
+    };
+
+    const key = Math.floor(Math.random() * 349343343344345345345 * 3230);
+    try {
+      await AsyncStorage.setItem(key.toString(), JSON.stringify(Op));
+    } catch (error) {
+      alert(error);
+    }
+    alert("Saved Data Succesfully");
+  };
+  */
+  componentDidMount() {}
+  save = () => {
+    const time = new Date().toLocaleString();
+    //
+    /* data: {
+      base: this.state.Item_Base_Value,
+      convert: this.state.Item_Convertion_Value,
+      date: new Date().toUTCString(),
+      convertedValue: this.state.ConversionValue,
+      InputValue: this.state.InputValue
+    }*/
+
+    db.ref("Data/name" + "/" + time)
+      .set({
+        base: this.state.Item_Base_Value,
+        convert: this.state.Item_Convertion_Value,
+        date: new Date().toUTCString(),
+        convertedValue: this.state.ConversionValue,
+        InputValue: this.state.InputValue
+      })
+      .then(() => alert("Data Saved Successfully"))
+      .catch(() => alert("Data Not saved Error occured"));
+  };
+
   render() {
     return (
-      <View style={style.Main}>
-        <Text style={style.textStyle}>Currency Converter</Text>
+      <KeyboardAvoidingView style={style.Main} enabled behavior="padding">
+        <View
+          style={{
+            marginTop: 20,
+            flexDirection: "column",
+            justifyContent: "center",
+            alignItems: "flex-start"
+          }}
+          onTouchEnd={() => this.props.navigation.navigate("ScreenConvertS")}
+        >
+          <Image
+            source={ButtonImage.folder}
+            style={{ width: wp("13%"), height: hp("10%"), tintColor: "white" }}
+            resizeMode="contain"
+          />
+        </View>
+
+        {/*Btn Logo */}
+
+        <View style={{ justifyContent: "center", alignItems: "center" }}>
+          <Image
+            source={ButtonImage.logo}
+            style={{
+              width: wp("40%"),
+              height: hp("30%")
+            }}
+            resizeMode="contain"
+          />
+        </View>
 
         <View style={style.View3}>
           {/*FirstInput */}
           <View style={style.View3Inside1}>
             <TouchableOpacity
-              style={{ backgroundColor: "gray", width: wp("20%"), height: hp("6.6%") }}
+              style={{ backgroundColor: "#19b5fe", width: wp("20%"), height: hp("6.6%") }}
               onPress={() => {
                 this.props.navigation.navigate("ScreenInputFlatListOne");
               }}
@@ -87,7 +168,7 @@ class LoginScreen extends Component {
           <View style={style.View3Inside2}>
             <TouchableOpacity
               style={{
-                backgroundColor: "gray",
+                backgroundColor: "#19b5fe",
                 width: wp("20%"),
                 height: hp("6.6%")
               }}
@@ -108,7 +189,10 @@ class LoginScreen extends Component {
         </View>
 
         {this.state.InputValue != "" ? (
-          <TouchableOpacity onPress={this.currencyConverter} style={{ marginTop: 30 }}>
+          <TouchableOpacity
+            onPress={this.currencyConverter}
+            style={{ marginTop: 30, justifyContent: "center", alignItems: "center" }}
+          >
             <Image
               source={ButtonImage.currencyConvert}
               resizeMode={"contain"}
@@ -124,7 +208,7 @@ class LoginScreen extends Component {
         {this.state.indicator ? (
           <View>
             <Text
-              style={{ marginTop: 30, textAlign: "center", color: "black", fontWeight: "bold" }}
+              style={{ marginTop: 30, textAlign: "center", color: "white", fontWeight: "bold" }}
             >
               {"1 " +
                 this.state.Item_Base_Value +
@@ -137,7 +221,23 @@ class LoginScreen extends Component {
             </Text>
           </View>
         ) : null}
-      </View>
+
+        {this.state.indicator ? (
+          <View style={{ justifyContent: "center", alignItems: "center" }}>
+            <TouchableOpacity
+              style={{
+                borderWidth: 1,
+                borderRadius: 20,
+                borderColor: "white",
+                width: 60
+              }}
+              onPress={this.save}
+            >
+              <Text style={{ marginLeft: 5, fontSize: 20, color: "white" }}>Save</Text>
+            </TouchableOpacity>
+          </View>
+        ) : null}
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -147,9 +247,7 @@ export default LoginScreen;
 const style = StyleSheet.create({
   Main: {
     flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    backgroundColor: "gray"
+    backgroundColor: "#19b5fe"
   },
   textStyle: {
     fontSize: 25,
