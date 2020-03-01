@@ -3,6 +3,7 @@ import React, { Component, useState } from "react";
 import { View, Text, FlatList, TouchableOpacity } from "react-native";
 
 import firebase from "firebase";
+import { AntDesign } from "@expo/vector-icons";
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp
@@ -89,12 +90,15 @@ class FL extends Component {
         <View
           style={{
             marginTop: 24,
-            height: 40,
+            height: 60,
             justifyContent: "center",
             alignItems: "center",
             backgroundColor: "#19b5fe"
           }}
         >
+          <TouchableOpacity onPress={() => this.props.navigation.navigate("HomeScreen")}>
+            <AntDesign name="back" size={30} color="black" />
+          </TouchableOpacity>
           <Text
             style={{
               fontSize: 20,
